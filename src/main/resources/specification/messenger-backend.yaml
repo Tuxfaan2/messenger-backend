@@ -1,0 +1,78 @@
+openapi: "3.0.3"
+info:
+  description: link-list-api
+  title: LinkListApi
+  version: ${project.version}
+tags:
+  - name: message
+  - name: chat
+paths:
+  /api/v1/message:
+    post:
+      tags:
+        - message
+      operationId: addNewMessage
+      description: Add new message to chat
+      requestBody:
+        description: AddMessageRequest
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AddMessageRequest"
+        required: true
+      responses:
+        "201":
+          description: MessageDto
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MessageDto"
+    get:
+      tags:
+        - message
+      operationId: getAllMessages
+      description: Get all messages
+      responses:
+        "200":
+          description: MessagesResponse
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/MessageDto"
+components:
+  parameters:
+    LinkId:
+      in: path
+      name: link-id
+      required: true
+      schema:
+        type: integer
+        format: int64
+      description: The link ID
+  schemas:
+    AddMessageRequest:
+      type: object
+      required:
+        - content
+        - userId
+      properties:
+        content:
+          type: string
+        userId:
+          type: string
+    MessageDto:
+      type: object
+      required:
+        - url
+        - title
+        - description
+      properties:
+        content:
+          type: string
+        userId:
+          type: string
+        timestamp:
+          type: string
+          format: date
