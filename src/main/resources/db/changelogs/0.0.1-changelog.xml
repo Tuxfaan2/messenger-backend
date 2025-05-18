@@ -1,15 +1,17 @@
 <databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <property name="now" value="now()" dbms="postgresql"/>
     <changeSet id="add table and columns for messages" author="Tuxfan">
-        <createTable tableName="messages">
+        <createTable tableName="message">
             <column name="id" type="bigint">
                 <constraints primaryKey="true"/>
             </column>
             <column name="content" type="varchar"/>
             <column name="sender_id" type="uuid"/>
             <column name="receiver_id" type="uuid"/>
+            <column name="timestamp" type="timestamp with time zone"/>
         </createTable>
-        <createSequence sequenceName="MESSAGES_SEQ" incrementBy="1" startValue="1"/>
+        <createSequence sequenceName="MESSAGE_SEQ" incrementBy="1" startValue="1"/>
     </changeSet>
 </databaseChangeLog>

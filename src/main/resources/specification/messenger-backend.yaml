@@ -42,37 +42,34 @@ paths:
                 items:
                   $ref: "#/components/schemas/MessageDto"
 components:
-  parameters:
-    LinkId:
-      in: path
-      name: link-id
-      required: true
-      schema:
-        type: integer
-        format: int64
-      description: The link ID
   schemas:
     AddMessageRequest:
       type: object
       required:
         - content
-        - userId
+        - receiverId
       properties:
         content:
           type: string
-        userId:
+        receiverId:
           type: string
+          format: uuid
     MessageDto:
       type: object
       required:
-        - url
-        - title
-        - description
+        - content
+        - senderId
+        - receiverId
+        - timestamp
       properties:
         content:
           type: string
-        userId:
+        senderId:
           type: string
+          format: uuid
+        receiverId:
+          type: string
+          format: uuid
         timestamp:
           type: string
-          format: date
+          format: date-time
