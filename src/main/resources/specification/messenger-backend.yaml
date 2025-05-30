@@ -6,6 +6,7 @@ info:
 tags:
   - name: message
   - name: chat
+  - name: authorization
 paths:
   /api/v1/message:
     post:
@@ -41,6 +42,46 @@ paths:
                 type: array
                 items:
                   $ref: "#/components/schemas/MessageDto"
+  /api/v1/credentials-login:
+    post:
+      tags:
+        - authorization
+      operationId: loginWithCredentials
+      description: Login with credentials
+      requestBody:
+        description: LoginRequest
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: "#/components/schemas/CredentialsLoginRequest"
+        required: true
+      responses:
+        "200":
+          description: TokenResponse
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TokenResponse"
+  /api/v1/token-login:
+    post:
+      tags:
+        - authorization
+      operationId: loginWithRefreshToken
+      description: Login with refresh-token
+      requestBody:
+        description: LoginRequest
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: "#/components/schemas/RefreshTokenLoginRequest"
+        required: true
+      responses:
+        "201":
+          description: TokenResponse
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TokenResponse"
 components:
   schemas:
     AddMessageRequest:
@@ -54,6 +95,40 @@ components:
         receiverId:
           type: string
           format: uuid
+    CredentialsLoginRequest:
+      type: object
+      required:
+        - password
+        - username
+      properties:
+        password:
+          type: string
+        username:
+          type: string
+    RefreshTokenLoginRequest:
+      type: object
+      required:
+        - refreshToken
+      properties:
+        refreshToken:
+          type: string
+    TokenResponse:
+      type: object
+      required:
+        - token
+      properties:
+        access_token:
+          type: string
+        expires_in:
+          type: string
+        refresh_expires_in:
+          type: string
+        refresh_token:
+          type: string
+        token_type:
+          type: string
+        id_token:
+          type: string
     MessageDto:
       type: object
       required:

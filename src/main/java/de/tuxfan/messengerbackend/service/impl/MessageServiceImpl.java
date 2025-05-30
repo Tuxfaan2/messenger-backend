@@ -46,7 +46,9 @@ public class MessageServiceImpl implements MessageService {
 
     private UUID getUserId() {
         SecurityContext securityContext = SecurityContextHolder.getContext();
-        HashMap credentials = objectMapper.convertValue(securityContext.getAuthentication().getCredentials(), HashMap.class);
+        HashMap credentials =
+                objectMapper.convertValue(securityContext.getAuthentication().getCredentials(),
+                        HashMap.class);
         HashMap claims = objectMapper.convertValue(credentials.get("claims"), HashMap.class);
         return UUID.fromString((String) claims.get("sid"));
     }
