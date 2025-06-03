@@ -2,11 +2,9 @@ package de.tuxfan.messengerbackend.configuration;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
-import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
 import org.springframework.security.oauth2.server.resource.authentication.JwtGrantedAuthoritiesConverter;
 import org.springframework.security.web.SecurityFilterChain;
@@ -23,12 +21,11 @@ public class SecurityConfiguration {
             });
         });
 
-        http.sessionManagement(sessions -> {
-            sessions.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-        }).csrf(AbstractHttpConfigurer::disable);
+        http
+                .csrf(AbstractHttpConfigurer::disable);
 
         http.authorizeHttpRequests(requests -> {
-            requests.anyRequest().authenticated();
+            requests.requestMatchers("/api/v1/credentials-login", "/api/v1/token-login").permitAll().anyRequest().authenticated();
         });
         return http.build();
     }
