@@ -7,6 +7,7 @@ tags:
   - name: message
   - name: chat
   - name: authorization
+  - name: user
 paths:
   /api/v1/message:
     post:
@@ -82,6 +83,19 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/TokenResponse"
+  /api/v1/user:
+    get:
+      tags:
+        - user
+      operationId: getCurrentUser
+      description: Login with refresh-token
+      responses:
+        "200":
+          description: UserResponse
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserResponse"
 components:
   schemas:
     AddMessageRequest:
@@ -128,6 +142,21 @@ components:
         token_type:
           type: string
         id_token:
+          type: string
+    UserResponse:
+      type: object
+      required:
+        - token
+      properties:
+        username:
+          type: string
+        email:
+          type: string
+        firstname:
+          type: string
+        lastname:
+          type: string
+        userId:
           type: string
     MessageDto:
       type: object
