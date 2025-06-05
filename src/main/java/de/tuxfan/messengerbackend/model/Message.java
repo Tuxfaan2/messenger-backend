@@ -10,6 +10,7 @@ public class Message {
     private String content;
     private UUID senderId;
     private UUID receiverId;
+    private UUID chatId;
     private OffsetDateTime timestamp;
 
     public String getContent() {
@@ -44,9 +45,18 @@ public class Message {
         this.timestamp = timestamp;
     }
 
+    public UUID getChatId() {
+        return chatId;
+    }
+
+    public void setChatId(UUID chatId) {
+        this.chatId = chatId;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "message_seq")
-    @SequenceGenerator(name = "message_seq", sequenceName = "MESSAGE_SEQ", initialValue = 1, allocationSize = 1)
+    @SequenceGenerator(name = "message_seq", sequenceName = "MESSAGE_SEQ", initialValue = 1,
+            allocationSize = 1)
     private Long id;
 
     public void setId(Long id) {
@@ -63,6 +73,7 @@ public class Message {
         messageDto.setSenderId(senderId);
         messageDto.setReceiverId(receiverId);
         messageDto.setTimestamp(timestamp);
+        messageDto.setChatId(chatId);
         return messageDto;
     }
 }

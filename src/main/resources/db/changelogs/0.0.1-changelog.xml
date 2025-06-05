@@ -14,4 +14,19 @@
         </createTable>
         <createSequence sequenceName="MESSAGE_SEQ" incrementBy="1" startValue="1"/>
     </changeSet>
+    <changeSet id="add table and columns for chat" author="Tuxfan">
+        <createTable tableName="chat">
+            <column name="id" type="bigint">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="chat_id" type="uuid"/>
+            <column name="user_ids" type="uuid[]"/>
+        </createTable>
+        <createSequence sequenceName="CHAT_SEQ" incrementBy="1" startValue="1"/>
+    </changeSet>
+    <changeSet id="add column chat_id to message" author="Tuxfan">
+        <addColumn tableName="message">
+            <column name="chat_id" type="uuid"/>
+        </addColumn>
+    </changeSet>
 </databaseChangeLog>

@@ -1,6 +1,6 @@
 spring:
   application:
-    name: link-list-api
+    name: messenger-backend
   liquibase:
     change-log: db/master.xml
   datasource:
