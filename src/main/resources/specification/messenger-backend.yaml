@@ -96,6 +96,40 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/UserResponse"
+  /api/v1/chat:
+    post:
+      tags:
+        - chat
+      operationId: createNewChat
+      description: Create new chat
+      requestBody:
+        description: AddMessageRequest
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateChatRequest"
+        required: true
+      responses:
+        "201":
+          description: ChatDto
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ChatDto"
+    get:
+      tags:
+        - chat
+      operationId: getAllChatsForCurrentUser
+      description: Get all chats for current user
+      responses:
+        "200":
+          description: MessagesResponse
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ChatDto"
 components:
   schemas:
     AddMessageRequest:
@@ -107,6 +141,9 @@ components:
         content:
           type: string
         receiverId:
+          type: string
+          format: uuid
+        chatId:
           type: string
           format: uuid
     CredentialsLoginRequest:
@@ -165,7 +202,11 @@ components:
         - senderId
         - receiverId
         - timestamp
+        - chatId
       properties:
+        chatId:
+          type: string
+          format: uuid
         content:
           type: string
         senderId:
@@ -177,3 +218,23 @@ components:
         timestamp:
           type: string
           format: date-time
+    CreateChatRequest:
+      type: object
+      required:
+        - userIds
+      properties:
+        userIds:
+          type: array
+          items:
+            type: string
+            format: uuid
+    ChatDto:
+      type: object
+      allOf:
+        - $ref: "#/components/schemas/CreateChatRequest"
+      required:
+        - chatId
+      properties:
+        chatId:
+          type: string
+          format: uuid
