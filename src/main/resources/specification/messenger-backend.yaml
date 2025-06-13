@@ -43,6 +43,23 @@ paths:
                 type: array
                 items:
                   $ref: "#/components/schemas/MessageDto"
+  /api/v1/message/{chatId}:
+    get:
+      tags:
+        - message
+      operationId: getMessagesByChatId
+      description: Get all messages
+      parameters:
+        - $ref: "#/components/parameters/ChatId"
+      responses:
+        "200":
+          description: MessagesResponse
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/MessageDto"
   /api/v1/credentials-login:
     post:
       tags:
@@ -88,7 +105,7 @@ paths:
       tags:
         - user
       operationId: getCurrentUser
-      description: Login with refresh-token
+      description: Get current user
       responses:
         "200":
           description: UserResponse
@@ -96,6 +113,21 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/UserResponse"
+  /api/v1/all-user:
+    get:
+      tags:
+        - user
+      operationId: getAllUser
+      description: Get all user
+      responses:
+        "200":
+          description: UserResponse
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/UserResponse"
   /api/v1/chat:
     post:
       tags:
@@ -142,7 +174,6 @@ components:
           type: string
         receiverId:
           type: string
-          format: uuid
         chatId:
           type: string
           format: uuid
@@ -211,10 +242,8 @@ components:
           type: string
         senderId:
           type: string
-          format: uuid
         receiverId:
           type: string
-          format: uuid
         timestamp:
           type: string
           format: date-time
@@ -227,7 +256,6 @@ components:
           type: array
           items:
             type: string
-            format: uuid
     ChatDto:
       type: object
       allOf:
@@ -238,3 +266,12 @@ components:
         chatId:
           type: string
           format: uuid
+  parameters:
+    ChatId:
+      in: path
+      name: chatId
+      required: true
+      schema:
+        type: string
+        format: uuid
+      description: The chat UUID

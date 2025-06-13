@@ -7,13 +7,13 @@ import java.util.UUID;
 
 @Entity
 public class Chat {
-    public Chat(List<UUID> userIdsToInitializeWith) {
+    public Chat(List<String> userIdsToInitializeWith) {
         chatId = UUID.randomUUID();
         userIds = userIdsToInitializeWith;
     }
 
     private UUID chatId;
-    private List<UUID> userIds;
+    private List<String> userIds;
 
     public Chat() {
 
@@ -27,17 +27,19 @@ public class Chat {
         this.chatId = chatId;
     }
 
-    public List<UUID> getUserIds() {
+    public List<String> getUserIds() {
         return userIds;
     }
 
-    public void setUserIds(List<UUID> userIds) {
+    public void setUserIds(List<String> userIds) {
         this.userIds = userIds;
     }
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "chat_seq")
-    @SequenceGenerator(name = "chat_seq", sequenceName = "CHAT_SEQ", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator =
+            "chat_seq")
+    @SequenceGenerator(name = "chat_seq", sequenceName = "CHAT_SEQ"
+            , allocationSize = 1)
     private Long id;
 
     public void setId(Long id) {

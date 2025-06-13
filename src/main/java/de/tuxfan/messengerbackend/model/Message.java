@@ -8,8 +8,8 @@ import java.util.UUID;
 @Entity
 public class Message {
     private String content;
-    private UUID senderId;
-    private UUID receiverId;
+    private String senderMail;
+    private String receiverMail;
     private UUID chatId;
     private OffsetDateTime timestamp;
 
@@ -21,20 +21,20 @@ public class Message {
         this.content = content;
     }
 
-    public UUID getSenderId() {
-        return senderId;
+    public String getSenderMail() {
+        return senderMail;
     }
 
-    public void setSenderId(UUID senderId) {
-        this.senderId = senderId;
+    public void setSenderMail(String senderMail) {
+        this.senderMail = senderMail;
     }
 
-    public UUID getReceiverId() {
-        return receiverId;
+    public String getReceiverMail() {
+        return receiverMail;
     }
 
-    public void setReceiverId(UUID receiverId) {
-        this.receiverId = receiverId;
+    public void setReceiverMail(String receiverMail) {
+        this.receiverMail = receiverMail;
     }
 
     public OffsetDateTime getTimestamp() {
@@ -54,9 +54,10 @@ public class Message {
     }
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "message_seq")
-    @SequenceGenerator(name = "message_seq", sequenceName = "MESSAGE_SEQ", initialValue = 1,
-            allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator =
+            "message_seq")
+    @SequenceGenerator(name = "message_seq", sequenceName =
+            "MESSAGE_SEQ", initialValue = 1, allocationSize = 1)
     private Long id;
 
     public void setId(Long id) {
@@ -70,8 +71,8 @@ public class Message {
     public MessageDto toDto() {
         MessageDto messageDto = new MessageDto();
         messageDto.setContent(content);
-        messageDto.setSenderId(senderId);
-        messageDto.setReceiverId(receiverId);
+        messageDto.setSenderId(senderMail);
+        messageDto.setReceiverId(receiverMail);
         messageDto.setTimestamp(timestamp);
         messageDto.setChatId(chatId);
         return messageDto;

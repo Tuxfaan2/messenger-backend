@@ -2,7 +2,8 @@
                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
     <property name="now" value="now()" dbms="postgresql"/>
-    <changeSet id="add table and columns for messages" author="Tuxfan">
+    <changeSet id="add table and columns for messages"
+               author="Tuxfan">
         <createTable tableName="message">
             <column name="id" type="bigint">
                 <constraints primaryKey="true"/>
@@ -12,7 +13,8 @@
             <column name="receiver_id" type="uuid"/>
             <column name="timestamp" type="timestamp with time zone"/>
         </createTable>
-        <createSequence sequenceName="MESSAGE_SEQ" incrementBy="1" startValue="1"/>
+        <createSequence sequenceName="MESSAGE_SEQ" incrementBy="1"
+                        startValue="1"/>
     </changeSet>
     <changeSet id="add table and columns for chat" author="Tuxfan">
         <createTable tableName="chat">
@@ -22,11 +24,35 @@
             <column name="chat_id" type="uuid"/>
             <column name="user_ids" type="uuid[]"/>
         </createTable>
-        <createSequence sequenceName="CHAT_SEQ" incrementBy="1" startValue="1"/>
+        <createSequence sequenceName="CHAT_SEQ" incrementBy="1"
+                        startValue="1"/>
     </changeSet>
     <changeSet id="add column chat_id to message" author="Tuxfan">
         <addColumn tableName="message">
             <column name="chat_id" type="uuid"/>
+        </addColumn>
+    </changeSet>
+    <changeSet
+            id="change datatype of column user-ids in table chat"
+            author="Tuxfan">
+        <dropColumn tableName="chat"
+                    columnName="user_ids"/>
+        <addColumn tableName="chat">
+            <column name="user_ids" type="varchar[]"/>
+        </addColumn>
+    </changeSet>
+    <changeSet
+            id="change datatype of column with relations to user to string"
+            author="Tuxfan">
+        <dropColumn tableName="message"
+                    columnName="sender_id"/>
+        <addColumn tableName="message">
+            <column name="sender_mail" type="varchar"/>
+        </addColumn>
+        <dropColumn tableName="message"
+                    columnName="receiver_id"/>
+        <addColumn tableName="message">
+            <column name="receiver_mail" type="varchar"/>
         </addColumn>
     </changeSet>
 </databaseChangeLog>

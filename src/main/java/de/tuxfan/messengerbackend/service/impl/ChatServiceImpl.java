@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.UUID;
 
 @Service
 public class ChatServiceImpl implements ChatService {
@@ -31,21 +30,21 @@ public class ChatServiceImpl implements ChatService {
         Chat chat = chatRepository.save(chatRequest);
         return chat.toDto();
     }
-    
+
     @Override
     public List<ChatDto> getAllChatsForCurrentUser() {
         List<Chat> chats = chatRepository.findAll();
 
-        return chats.stream().filter(chat -> chat.getUserIds().contains(getUserId())).map(Chat::toDto).toList();
+        return chats.stream().filter(chat -> chat.getUserIds().contains(getUserMail())).map(Chat::toDto).toList();
     }
 
-    private UUID getUserId() {
+    private String getUserMail() {
         SecurityContext securityContext =
                 SecurityContextHolder.getContext();
         HashMap credentials =
                 objectMapper.convertValue(securityContext.getAuthentication().getCredentials(), HashMap.class);
         HashMap claims = objectMapper.convertValue(credentials.get(
                 "claims"), HashMap.class);
-        return UUID.fromString((String) claims.get("sid"));
+        return (String) claims.get("email");
     }
 }
