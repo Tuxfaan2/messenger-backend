@@ -24,11 +24,13 @@ public class LoginServiceImpl implements LoginService {
     public LoginServiceImpl(ObjectMapper objectMapper,
                             MessengerConfigurationProperties messengerConfigurationProperties) {
         this.objectMapper = objectMapper;
-        this.messengerConfigurationProperties = messengerConfigurationProperties;
+        this.messengerConfigurationProperties =
+                messengerConfigurationProperties;
     }
 
     @Override
-    public TokenResponse loginWithCredentials(String password, String username) {
+    public TokenResponse loginWithCredentials(String password,
+                                              String username) {
 
         return login(username, password);
     }
@@ -42,16 +44,18 @@ public class LoginServiceImpl implements LoginService {
 
     private TokenResponse login(String refreshToken) {
         String url =
-                messengerConfigurationProperties.getKeycloakConfiguration().getAuthServerUrl() +
-                        "/realms/" + messengerConfigurationProperties.getKeycloakConfiguration().getRealm() + "/protocol/openid-connect/token";
-        String clientId = messengerConfigurationProperties.getKeycloakConfiguration().getClientId();
+                messengerConfigurationProperties.getKeycloakConfiguration().getAuthServerUrl() + "/realms/" + messengerConfigurationProperties.getKeycloakConfiguration().getRealm() + "/protocol/openid-connect/token";
+        String clientId =
+                messengerConfigurationProperties.getKeycloakConfiguration().getClientId();
         String clientSecret =
                 messengerConfigurationProperties.getKeycloakConfiguration().getClientSecret();
-        try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
+        try (CloseableHttpClient httpClient =
+                     HttpClients.createDefault()) {
             HttpPost post = new HttpPost(url);
-            post.setHeader("Content-Type", "application/x-www-form-urlencoded");
-            String body =
-                    "client_id=" + clientId + "&grant_type=refresh_token&refresh_token=" + refreshToken + "&client_secret=" + clientSecret;
+            post.setHeader("Content-Type", "application/x-www-form" +
+                    "-urlencoded");
+            String body = "client_id=" + clientId + "&grant_type" +
+                    "=refresh_token&refresh_token=" + refreshToken + "&client_secret=" + clientSecret;
             return getResponse(httpClient, post, body);
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -60,17 +64,18 @@ public class LoginServiceImpl implements LoginService {
 
     private TokenResponse login(String username, String password) {
         String url =
-                messengerConfigurationProperties.getKeycloakConfiguration().getAuthServerUrl() +
-                        "/realms/" + messengerConfigurationProperties.getKeycloakConfiguration().getRealm() + "/protocol/openid-connect/token";
-        String clientId = messengerConfigurationProperties.getKeycloakConfiguration().getClientId();
+                messengerConfigurationProperties.getKeycloakConfiguration().getAuthServerUrl() + "/realms/" + messengerConfigurationProperties.getKeycloakConfiguration().getRealm() + "/protocol/openid-connect/token";
+        String clientId =
+                messengerConfigurationProperties.getKeycloakConfiguration().getClientId();
         String clientSecret =
                 messengerConfigurationProperties.getKeycloakConfiguration().getClientSecret();
-        try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
+        try (CloseableHttpClient httpClient =
+                     HttpClients.createDefault()) {
             HttpPost post = new HttpPost(url);
-            post.setHeader("Content-Type", "application/x-www-form-urlencoded");
-            String body =
-                    "client_id=" + clientId + "&grant_type=password&username=" + username +
-                            "&password=" + password + "&client_secret=" + clientSecret;
+            post.setHeader("Content-Type", "application/x-www-form" +
+                    "-urlencoded");
+            String body = "client_id=" + clientId + "&grant_type" +
+                    "=password&username=" + username + "&password=" + password + "&client_secret=" + clientSecret;
             return getResponse(httpClient, post, body);
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -89,5 +94,4 @@ public class LoginServiceImpl implements LoginService {
         String entity = EntityUtils.toString(response.getEntity());
         return objectMapper.readValue(entity, TokenResponse.class);
     }
-
 }

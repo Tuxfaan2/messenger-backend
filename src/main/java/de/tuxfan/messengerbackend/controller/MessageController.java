@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 
 import java.util.List;
+import java.util.UUID;
 
 @Controller
 public class MessageController implements MessageApi {
@@ -26,5 +27,10 @@ public class MessageController implements MessageApi {
     @Override
     public ResponseEntity<List<MessageDto>> getAllMessages() {
         return ResponseEntity.ok(messageService.getAllMessages());
+    }
+
+    @Override
+    public ResponseEntity<List<MessageDto>> getMessagesByChatId(UUID chatId) {
+        return ResponseEntity.ok(messageService.getMessagesByChatId(chatId));
     }
 }

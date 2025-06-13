@@ -6,6 +6,8 @@ import de.tuxfan.messengerbackend.service.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 
+import java.util.List;
+
 @Controller
 public class UserController implements UserApi {
     private final UserService userService;
@@ -17,5 +19,10 @@ public class UserController implements UserApi {
     @Override
     public ResponseEntity<UserResponse> getCurrentUser() {
         return ResponseEntity.ok(userService.getCurrentUser());
+    }
+
+    @Override
+    public ResponseEntity<List<UserResponse>> getAllUser() {
+        return ResponseEntity.ok(userService.getAllUsers());
     }
 }

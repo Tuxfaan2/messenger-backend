@@ -1,5 +1,6 @@
 package de.tuxfan.messengerbackend.service.impl;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import de.tuxfan.messengerbackend.model.AddMessageRequest;
 import de.tuxfan.messengerbackend.model.Message;
@@ -22,7 +23,8 @@ public class MessageServiceImpl implements MessageService {
     private final ObjectMapper objectMapper;
     private final MessageRepository messageRepository;
 
-    public MessageServiceImpl(ObjectMapper objectMapper, MessageRepository messageRepository) {
+    public MessageServiceImpl(ObjectMapper objectMapper,
+                              MessageRepository messageRepository) {
         this.objectMapper = objectMapper;
         this.messageRepository = messageRepository;
     }
@@ -30,9 +32,10 @@ public class MessageServiceImpl implements MessageService {
     @Override
     public MessageDto addNewMessage(AddMessageRequest addMessageRequest) {
         Message message = new Message();
+        message.setChatId(addMessageRequest.getChatId().orElse(null));
         message.setContent(addMessageRequest.getContent());
-        message.setSenderId(getUserId());
-        message.setReceiverId(addMessageRequest.getReceiverId());
+        message.setSenderMail(getUserClaims().get("email").toString());
+        message.setReceiverMail(addMessageRequest.getReceiverId());
         message.setTimestamp(OffsetDateTime.now());
         Message save = messageRepository.save(message);
         return save.toDto();
@@ -40,16 +43,25 @@ public class MessageServiceImpl implements MessageService {
 
     @Override
     public List<MessageDto> getAllMessages() {
-        List<Message> messages = Streamable.of(messageRepository.findAll()).toList();
+        List<Message> messages =
+                Streamable.of(messageRepository.findAll()).toList();
         return messages.stream().map(Message::toDto).collect(Collectors.toList());
     }
 
-    private UUID getUserId() {
-        SecurityContext securityContext = SecurityContextHolder.getContext();
+    @Override
+    public List<MessageDto> getMessagesByChatId(UUID chatId) {
+        List<Message> messages =
+                messageRepository.findAllByChatId(chatId);
+        return messages.stream().map(Message::toDto).collect(Collectors.toList());
+    }
+
+    private HashMap getUserClaims() {
+        SecurityContext securityContext =
+                SecurityContextHolder.getContext();
         HashMap credentials =
-                objectMapper.convertValue(securityContext.getAuthentication().getCredentials(),
-                        HashMap.class);
-        HashMap claims = objectMapper.convertValue(credentials.get("claims"), HashMap.class);
-        return UUID.fromString((String) claims.get("sid"));
+                objectMapper.convertValue(securityContext.getAuthentication().getCredentials(), HashMap.class);
+        return objectMapper.convertValue(credentials.get("claims"),
+                                         new TypeReference<>() {
+        });
     }
 }
