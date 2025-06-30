@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
@@ -31,12 +32,14 @@
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-oauth2-resource-server</artifactId>
+            <artifactId>spring-boot-starter-oauth2-resource-server
+            </artifactId>
         </dependency>
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-configuration-processor</artifactId>
+            <artifactId>spring-boot-configuration-processor
+            </artifactId>
             <optional>true</optional>
         </dependency>
         <dependency>
@@ -120,8 +123,9 @@
             </plugin>
             <plugin>
                 <groupId>org.openapitools</groupId>
-                <artifactId>openapi-generator-maven-plugin</artifactId>
-                <version>7.2.0</version>
+                <artifactId>openapi-generator-maven-plugin
+                </artifactId>
+                <version>7.12.0</version>
                 <executions>
                     <execution>
                         <goals>
@@ -129,7 +133,9 @@
                         </goals>
                         <phase>generate-sources</phase>
                         <configuration>
-                            <inputSpec>${basedir}/src/main/resources/specification/messenger-backend.yaml</inputSpec>
+                            <inputSpec>
+                                ${basedir}/src/main/resources/specification/messenger-backend.yaml
+                            </inputSpec>
                             <output>target/generated-sources</output>
                             <generatorName>spring</generatorName>
                             <generateApis>true</generateApis>
