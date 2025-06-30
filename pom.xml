@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
@@ -14,7 +15,7 @@
     <name>messenger-backend</name>
     <description>backend for messenger-webapp</description>
     <properties>
-        <java.version>17</java.version>
+        <java.version>23</java.version>
     </properties>
     <dependencies>
         <dependency>
@@ -31,12 +32,18 @@
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-oauth2-resource-server</artifactId>
+            <artifactId>spring-boot-starter-oauth2-resource-server
+            </artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-webflux</artifactId>
         </dependency>
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-configuration-processor</artifactId>
+            <artifactId>spring-boot-configuration-processor
+            </artifactId>
             <optional>true</optional>
         </dependency>
         <dependency>
@@ -120,7 +127,8 @@
             </plugin>
             <plugin>
                 <groupId>org.openapitools</groupId>
-                <artifactId>openapi-generator-maven-plugin</artifactId>
+                <artifactId>openapi-generator-maven-plugin
+                </artifactId>
                 <version>7.2.0</version>
                 <executions>
                     <execution>
@@ -129,28 +137,44 @@
                         </goals>
                         <phase>generate-sources</phase>
                         <configuration>
-                            <inputSpec>${basedir}/src/main/resources/specification/messenger-backend.yaml</inputSpec>
+                            <inputSpec>
+                                ${basedir}/src/main/resources/specification/messenger-backend.yaml
+                            </inputSpec>
                             <output>target/generated-sources</output>
                             <generatorName>spring</generatorName>
                             <generateApis>true</generateApis>
                             <generateApiTests>false</generateApiTests>
-                            <generateApiDocumentation>false</generateApiDocumentation>
-                            <generateModelTests>false</generateModelTests>
-                            <modelPackage>de.tuxfan.messengerbackend.model</modelPackage>
-                            <invokerPackage>de.tuxfan.messengerbackend.client</invokerPackage>
-                            <apiPackage>de.tuxfan.messengerbackend.api</apiPackage>
+                            <generateApiDocumentation>false
+                            </generateApiDocumentation>
+                            <generateModelTests>false
+                            </generateModelTests>
+                            <modelPackage>
+                                de.tuxfan.messengerbackend.model
+                            </modelPackage>
+                            <invokerPackage>
+                                de.tuxfan.messengerbackend.client
+                            </invokerPackage>
+                            <apiPackage>
+                                de.tuxfan.messengerbackend.api
+                            </apiPackage>
                             <configOptions>
                                 <useTags>true</useTags>
-                                <sourceFolder>src/gen/java/main</sourceFolder>
-                                <serializationLibrary>jackson</serializationLibrary>
-                                <useBeanValidation>false</useBeanValidation>
+                                <sourceFolder>src/gen/java/main
+                                </sourceFolder>
+                                <serializationLibrary>jackson
+                                </serializationLibrary>
+                                <useBeanValidation>false
+                                </useBeanValidation>
                                 <useOptional>true</useOptional>
-                                <bigDecimalAsString>true</bigDecimalAsString>
+                                <bigDecimalAsString>true
+                                </bigDecimalAsString>
                                 <useSwaggerUI>false</useSwaggerUI>
                                 <dateLibrary>java8</dateLibrary>
                                 <java8>true</java8>
-                                <useAbstractionForFiles>true</useAbstractionForFiles>
-                                <hideGenerationTimestamp>true</hideGenerationTimestamp>
+                                <useAbstractionForFiles>true
+                                </useAbstractionForFiles>
+                                <hideGenerationTimestamp>true
+                                </hideGenerationTimestamp>
                                 <interfaceOnly>true</interfaceOnly>
                             </configOptions>
                         </configuration>
