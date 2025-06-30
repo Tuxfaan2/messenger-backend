@@ -1,0 +1,10 @@
+{
+  "npmName": "@tuxfaan2/messenger-backend",
+  "npmVersion": "0.0.1",
+  "snapshot": false,
+  "supportsES6": true,
+  "modelPropertyNaming": "camelCase",
+  "paramNaming": "camelCase",
+  "sortModelPropertiesByRequiredFlag": true,
+  "sortParamsByRequiredFlag": true
+}
