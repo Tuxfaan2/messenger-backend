@@ -1,6 +1,5 @@
 {
   "npmName": "@tuxfaan2/messenger-backend",
-  "npmVersion": "",
   "snapshot": false,
   "supportsES6": true,
   "modelPropertyNaming": "camelCase",
