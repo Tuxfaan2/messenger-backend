@@ -11,7 +11,9 @@ jobs:
 
       - name: Checkout
         uses: actions/checkout@v4
-
+      - name: Extract Maven project version
+        run: echo ::set-output name=version::$(mvn -q -Dexec.executable=echo -Dexec.args='${project.version}' --non-recursive exec:exec)
+        id: project
       - name: Generate Typescript Client
         uses: openapi-generators/openapitools-generator-action@v1
         with:
@@ -19,7 +21,7 @@ jobs:
           config-file: .config/openapi-generator-config.json
           openapi-file: src/main/resources/specification/messenger-backend.yaml
           command-args:
-            --additional-properties=npmVersion=${{github.ref_name}}
+            --additional-properties=npmVersion=${{ steps.project.outputs.version }}
       - uses: actions/setup-node@v4
         with:
           node-version: '20.x'
