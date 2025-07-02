@@ -15,9 +15,9 @@ jobs:
         run: echo ::set-output name=version::$(mvn -q -Dexec.executable=echo -Dexec.args='${project.version}' --non-recursive exec:exec)
         id: project
       - run: |
-          REPO=${{ steps.project.outputs.version }}.${{ github.ref_name }}
-          DB_NAME="${REPO//\//-}"
-          echo ::set-output npm-version=$DB_NAME
+          UNFORMATTED_VERSION=${{ steps.project.outputs.version }}.${{ github.ref_name }}
+          FORMATTED_VERSION="${UNFORMATTED_VERSION//\//-}"
+          echo ::set-output npm-version=$FORMATTED_VERSION
         id: buildInfo
       - run: echo "::set-output name=lowerCaseValue::${UPPERCASE_VAR,,}"
         id: toLowerCase
