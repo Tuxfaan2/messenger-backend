@@ -18,6 +18,8 @@ jobs:
           generator: typescript-fetch
           config-file: .config/openapi-generator-config.json
           openapi-file: src/main/resources/specification/messenger-backend.yaml
+          command-args:
+            --npm-version "${{github.ref}} + ${{ steps.date.outputs.date }}"
       - uses: actions/setup-node@v4
         with:
           node-version: '20.x'
